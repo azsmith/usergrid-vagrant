@@ -18,19 +18,19 @@
 
 # purge old Node.js, add repo for new Node.js
 apt-get purge nodejs npm
-apt-get install software-properties-common
-apt-add-repository -y ppa:chris-lea/node.js
-
+apt-get -y install software-properties-common
+curl -sL https://deb.nodesource.com/setup_0.10 | bash -
+apt-get install -y nodejs npm
 # install what we need for building and running Usergrid Stack and Portal
 apt-get -y update
-apt-get -y install tomcat7 unzip git maven nodejs-legacy npm python-software-properties python g++ make
+apt-get -y install tomcat7 unzip git maven python-software-properties python g++ make
 /etc/init.d/tomcat7 stop
 
 # fetch usergrid code in our home dir
 cd /home/vagrant
 git clone https://git-wip-us.apache.org/repos/asf/usergrid.git usergrid
 cd usergrid
-git checkout two-dot-o
+git checkout two-dot-o-dev
 
 # build Usergrid Java SDK
 cd /home/vagrant/usergrid/sdks/java
@@ -41,6 +41,7 @@ cd /home/vagrant/usergrid/stack
 mvn -DskipTests=true clean install
 
 # deploy stack WAR to Tomcat
+cp rest/src/test/resources/log4j.properties /usr/share/tomcat7/lib/
 cd rest/target
 rm -rf /var/lib/tomcat7/webapps/*
 cp -r ROOT.war /var/lib/tomcat7/webapps

@@ -17,7 +17,7 @@
 
 String hostName  = (String)System.getenv().get("PUBLIC_HOSTNAME")
 
-def baseUrl      = "http://${hostName}:8080"
+def baseUrl      = "http://10.1.1.161:8080"
 def clusterName  = "usergrid"
 
 def superUserEmail     = "superuser@example.com"
@@ -25,7 +25,7 @@ def testAdminUserEmail = "testuser@example.com"
 
 def usergridConfig = """
 ######################################################
-# Minimal Usergrid configuration properties for local Tomcat and Cassandra 
+# Minimal Usergrid configuration properties for local Tomcat and Cassandra
 #
 
 cassandra.url=${hostName}:9160
@@ -42,7 +42,7 @@ cassandra.connections=50
 
 
 ######################################################
-# Custom mail transport 
+# Custom mail transport
 
 mail.transport.protocol=smtps
 mail.smtps.host=smtp.gmail.com
@@ -110,4 +110,4 @@ usergrid.user.activation.url=${baseUrl}%s/%s/users/%s/activate
 usergrid.admin.resetpw.url=${baseUrl}/management/users/%s/resetpw
 usergrid.user.resetpw.url=${baseUrl}/%s/%s/users/%s/resetpw
 """
-println usergridConfig 
+println usergridConfig

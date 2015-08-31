@@ -28,21 +28,32 @@ chmod +x *.sh
 # install essential stuff
 apt-get -y install vim curl groovy
 
+
 # install Java 7 and set it as default Java
 # http://askubuntu.com/questions/121654/how-to-set-default-java-version
-apt-get -y install openjdk-7-jdk
-sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/java-1.7.0-openjdk-amd64/bin/java" 1
-echo "1" | sudo update-alternatives --config java
+
+echo "java 8 installation"
+	apt-get install --yes python-software-properties
+  apt-get -y install software-properties-common
+	add-apt-repository ppa:webupd8team/java
+	apt-get update -qq
+	echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+	echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections
+	apt-get install --yes oracle-java8-installer
+	yes "" | apt-get -f install
+apt-get -y install oracle-java8-set-default
+
+
 
 # create a startup file for all shells
 cat >/etc/profile.d/usergrid-env.sh <<EOF
 alias sudo='sudo -E'
-export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64/jre
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre
 export PUBLIC_HOSTNAME=$PUBLIC_HOSTNAME
 EOF
 
 # setup login environment
-source /etc/profile.d/usergrid-env.sh 
+source /etc/profile.d/usergrid-env.sh
 
 pushd /vagrant
 ./install_cassandra.sh
