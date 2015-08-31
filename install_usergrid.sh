@@ -19,8 +19,7 @@
 # purge old Node.js, add repo for new Node.js
 apt-get purge nodejs npm
 apt-get -y install software-properties-common
-curl -sL https://deb.nodesource.com/setup_0.10 | bash -
-apt-get install -y nodejs npm
+apt-get install -y nodejs-legacy npm
 # install what we need for building and running Usergrid Stack and Portal
 apt-get -y update
 apt-get -y install tomcat7 unzip git maven python-software-properties python g++ make
@@ -65,7 +64,7 @@ cd /home/vagrant/usergrid/portal
 cd dist
 mkdir /var/lib/tomcat7/webapps/portal
 cp -r usergrid-portal/* /var/lib/tomcat7/webapps/portal
-sed -i.bak "s/https\:\/\/api.usergrid.com/http\:\/\/${PUBLIC_HOSTNAME}:8080/" /var/lib/tomcat7/webapps/portal/config.js
+sed -i.bak "s/https\:\/\/api.usergrid.com/http\:\/\/10.1.1.161:8080/" /var/lib/tomcat7/webapps/portal/config.js
 
 # go!
 /etc/init.d/tomcat7 restart
