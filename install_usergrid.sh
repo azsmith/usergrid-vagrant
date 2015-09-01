@@ -29,7 +29,7 @@ apt-get -y install tomcat7 unzip git maven python-software-properties python g++
 cd /home/vagrant
 git clone https://git-wip-us.apache.org/repos/asf/usergrid.git usergrid
 cd usergrid
-git checkout two-dot-o-dev
+git checkout two-dot-o
 
 # build Usergrid Java SDK
 cd /home/vagrant/usergrid/sdks/java
